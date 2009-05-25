@@ -1,7 +1,10 @@
-﻿
+
 local debugf = tekDebug and tekDebug:GetFrame("Kennel")
 local function Debug(...) if debugf then debugf:AddMessage(string.join(", ", ...)) end end
 
+local SPIRIT_OF_REDEMPTION = GetSpellInfo(20711)
+local FOOD = GetSpellInfo(7737)
+local DRINK = GetSpellInfo(430)
 
 local SOR, FOOD, DRINK = GetSpellInfo(20711), GetSpellInfo(7737), GetSpellInfo(430)
 
@@ -148,11 +151,19 @@ local wasmounted
 	end
 end
 
+function f:UPDATE_STEALTH()
+       if IsStealthed() then
+               f:Hide()
+               DismissCompanion("CRITTER")
+       end
+end
+
 f:RegisterEvent("COMPANION_UPDATE")
 f:RegisterEvent("PLAYER_UNGHOST")
 f:RegisterEvent("ZONE_CHANGED")
 f:RegisterEvent("ZONE_CHANGED_INDOORS")
 f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+f:RegisterEvent("UPDATE_STEALTH")
 
 
 KENNELFRAME = f
