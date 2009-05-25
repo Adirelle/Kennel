@@ -1,7 +1,10 @@
-﻿
+
 local debugf = tekDebug and tekDebug:GetFrame("Kennel")
 local function Debug(...) if debugf then debugf:AddMessage(string.join(", ", ...)) end end
 
+local SPIRIT_OF_REDEMPTION = GetSpellInfo(20711)
+local FOOD = GetSpellInfo(7737)
+local DRINK = GetSpellInfo(430)
 
 local DELAY = 2
 local blistzones, db = {
@@ -58,8 +61,7 @@ f:SetScript("OnUpdate", function(self, elap)
 	local _, instanceType = IsInInstance()
 	local pvpink = instanceType == "pvp" or instanceType == "arena"
 
-	if pvpink or InCombatLockdown() or IsStealthed() or IsMounted() or IsFlying() or UnitCastingInfo("player") or blistzones[GetSubZoneText()]
-		or UnitBuff("player", "Spirit of Redemption") or UnitBuff("player", "Food") or UnitBuff("player", "Drink") then
+	if pvpink or InCombatLockdown() or IsStealthed() or IsMounted() or IsFlying() or UnitCastingInfo("player") or UnitChannelInfo("player") or blistzones[GetSubZoneText()] or UnitBuff("player", SPIRIT_OF_REDEMPTION) or UnitBuff("player", FOOD) or UnitBuff("player", DRINK) then
 		elapsed = 0
 		return
 	end
@@ -127,9 +129,17 @@ local wasmounted
 	end
 end
 
+function f:UPDATE_STEALTH()
+       if IsStealthed() then
+               f:Hide()
+               DismissCompanion("CRITTER")
+       end
+end
+
 f:RegisterEvent("COMPANION_UPDATE")
 f:RegisterEvent("PLAYER_UNGHOST")
-f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+--f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+f:RegisterEvent("UPDATE_STEALTH")
 
 
 KENNELFRAME = f
