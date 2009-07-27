@@ -8,6 +8,8 @@ local DRINK = GetSpellInfo(430)
 
 local SOR, FOOD, DRINK = GetSpellInfo(20711), GetSpellInfo(7737), GetSpellInfo(430)
 
+local SOR, FOOD, DRINK = GetSpellInfo(20711), GetSpellInfo(7737), GetSpellInfo(430)
+
 local DELAY = 2
 local blistzones, db = {
 	["Throne of Kil'jaeden"] = true,
