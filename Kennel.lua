@@ -163,7 +163,10 @@ f:RegisterEvent("PLAYER_UNGHOST")
 f:RegisterEvent("ZONE_CHANGED")
 f:RegisterEvent("ZONE_CHANGED_INDOORS")
 f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+<<<<<<< HEAD:Kennel.lua
 f:RegisterEvent("UPDATE_STEALTH")
+=======
+>>>>>>> Merged latest tekkub version.:Kennel.lua
 
 
 KENNELFRAME = f
