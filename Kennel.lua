@@ -2,10 +2,6 @@
 local debugf = tekDebug and tekDebug:GetFrame("Kennel")
 local function Debug(...) if debugf then debugf:AddMessage(string.join(", ", ...)) end end
 
-local SPIRIT_OF_REDEMPTION = GetSpellInfo(20711)
-local FOOD = GetSpellInfo(7737)
-local DRINK = GetSpellInfo(430)
-
 local SOR, FOOD, DRINK = GetSpellInfo(20711), GetSpellInfo(7737), GetSpellInfo(430)
 
 local DELAY = 2
