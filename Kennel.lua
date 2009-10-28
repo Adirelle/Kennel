@@ -152,10 +152,12 @@ local wasmounted
 end
 
 function f:UPDATE_STEALTH()
-       if IsStealthed() then
-               f:Hide()
-               DismissCompanion("CRITTER")
-       end
+	if IsStealthed() then
+		self:Hide()
+		DismissCompanion("CRITTER")
+	else
+		PutTheCatOut(self, "UPDATE_STEALTH")
+	end	
 end
 
 f:RegisterEvent("COMPANION_UPDATE")
@@ -163,10 +165,6 @@ f:RegisterEvent("PLAYER_UNGHOST")
 f:RegisterEvent("ZONE_CHANGED")
 f:RegisterEvent("ZONE_CHANGED_INDOORS")
 f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-<<<<<<< HEAD:Kennel.lua
 f:RegisterEvent("UPDATE_STEALTH")
-=======
->>>>>>> Merged latest tekkub version.:Kennel.lua
-
 
 KENNELFRAME = f
