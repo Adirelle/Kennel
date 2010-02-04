@@ -79,7 +79,7 @@ f:SetScript("OnUpdate", function(self, elap)
 	local _, instanceType = IsInInstance()
 	local pvpink = instanceType == "pvp" or instanceType == "arena"
 
-	if pvpink or InCombatLockdown() or IsStealthed() or IsMounted() or IsFlying() or IsFalling() or UnitCastingInfo("player") or UnitChannelInfo("player") or blistzones[GetSubZoneText()]
+	if pvpink or InCombatLockdown() or IsStealthed() or IsMounted() or IsFlying() or IsFalling() or UnitCastingInfo("player") or UnitChannelInfo("player") or UnitIsFeignDeath("player") or blistzones[GetSubZoneText()]
 		or UnitBuff("player", SOR) or UnitBuff("player", FOOD) or UnitBuff("player", DRINK) or LootFrame:IsShown() then
 		elapsed = 0
 		return
