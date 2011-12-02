@@ -1,8 +1,10 @@
 ﻿
-local NUMROWS, NUMCOLS, ICONSIZE, GAP, EDGEGAP = 5, 8, 32, 8, 16
+local NUMROWS, NUMCOLS, ICONSIZE, GAP, EDGEGAP = 8, 4, 32, 8, 16
 local rows = {}
 local kennel = KENNELFRAME
 KENNELFRAME = nil
+
+if AddonLoader and AddonLoader.RemoveInterfaceOptions then AddonLoader:RemoveInterfaceOptions("Kennel") end
 
 local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
 frame.name = "Kennel"
@@ -73,8 +75,9 @@ frame:SetScript("OnShow", function(frame)
 		kennel.randomdb[self.id] = v
 
 		self:GetNormalTexture():SetDesaturated(v == 0)
-		self:SetChecked(v > 0)
-		self:GetCheckedTexture():SetAlpha(v/2)
+		self:SetChecked(v == 2)
+		self.text:SetFontObject(v > 0 and GameFontHighlightSmall or GameFontDisableSmall)
+
 
 		kennel.nlow = 0
 		for i=1,GetNumCompanions("CRITTER") do
@@ -94,7 +97,7 @@ frame:SetScript("OnShow", function(frame)
 		local row = CreateFrame("Frame", nil, randoms)
 		row:SetHeight(ICONSIZE)
 		if i == 1 then row:SetPoint("TOPLEFT", randoms, EDGEGAP, -EDGEGAP-ICONSIZE-6)
-		else row:SetPoint("TOPLEFT", rows[i-1], "BOTTOMLEFT", 0, -6) end
+		else row:SetPoint("TOPLEFT", rows[i-1], "BOTTOMLEFT", 0, -10) end
 		row:SetPoint("RIGHT", -EDGEGAP, 0)
 		row.buttons = {}
 		rows[i] = row
@@ -102,7 +105,7 @@ frame:SetScript("OnShow", function(frame)
 		for j=1,NUMCOLS do
 			local iconbutton = CreateFrame("CheckButton", nil, row)
 			if j == 1 then iconbutton:SetPoint("TOPLEFT", row, "TOPLEFT")
-			else iconbutton:SetPoint("LEFT", row.buttons[j-1], "RIGHT", GAP, 0) end
+			else iconbutton:SetPoint("LEFT", row.buttons[j-1], "RIGHT", 100, 0) end
 			iconbutton:SetWidth(ICONSIZE)
 			iconbutton:SetHeight(ICONSIZE)
 
@@ -116,6 +119,13 @@ frame:SetScript("OnShow", function(frame)
 			iconbutton:SetScript("OnEnter", ShowTooltip)
 			iconbutton:SetScript("OnLeave", HideTooltip)
 			iconbutton:SetScript("OnClick", OnClick)
+
+			local text = iconbutton:CreateFontString(nil, nil, "GameFontHighlightSmall")
+			text:SetPoint("TOPLEFT",  iconbutton, "TOPRIGHT", 5, 2)
+			text:SetPoint("BOTTOMRIGHT", iconbutton, "BOTTOMRIGHT", 95, -2)
+			text:SetJustifyH("LEFT")
+			text:SetJustifyV("MIDDLE")
+			iconbutton.text = text
 
 			row.buttons[j] = iconbutton
 		end
@@ -133,8 +143,9 @@ frame:SetScript("OnShow", function(frame)
 					butt.name, butt.id = name, id
 					butt:SetNormalTexture(tex)
 					butt:GetNormalTexture():SetDesaturated(kennel.randomdb[id] == 0)
-					butt:SetChecked(kennel.randomdb[id] > 0)
-					butt:GetCheckedTexture():SetAlpha(kennel.randomdb[id]/2)
+					butt:SetChecked(kennel.randomdb[id] == 2)
+					butt.text:SetText(name)
+					butt.text:SetFontObject(kennel.randomdb[id] > 0 and GameFontHighlightSmall or GameFontDisableSmall)
 					butt:Show()
 				else
 					butt:Hide()
@@ -298,3 +309,17 @@ end)
 InterfaceOptions_AddCategory(frame)
 
 LibStub("tekKonfig-AboutPanel").new("Kennel", "Kennel")
+
+
+local butt = CreateFrame("Button", nil, SpellBookCompanionsFrame)
+butt:SetWidth(32) butt:SetHeight(32)
+butt:SetPoint("TOPRIGHT", -25, -40)
+butt:SetNormalTexture("Interface\\Icons\\INV_Box_PetCarrier_01")
+butt:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square")
+butt:SetScript("OnClick", function() InterfaceOptionsFrame_OpenToCategory(frame) end)
+butt:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText("Open Kennel config")
+	GameTooltip:Show()
+end)
+butt:SetScript("OnLeave", function() GameTooltip:Hide() end)
