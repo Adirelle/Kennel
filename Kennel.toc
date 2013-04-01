@@ -1,23 +1,24 @@
-## Interface: 40300
+## Interface: 50001
 
 ## Title: Kennel
 ## Notes: Random pet summoner
 ## Author: Tekkub Stoutwrithe
-## Version: 3.2.0.12
-## X-Website: http://www.tekkub.net/
-## X-Email: tekkub-wow@googlegroups.com
-## X-Category: Inventory
+## Version: Alpha
+## X-Website: http://tekkub.net/
 ## X-Icon: Interface\Icons\INV_Box_PetCarrier_01
 
 ## OptionalDeps: tekDebug
-
-## SavedVariablesPerCharacter: KennelDBPC
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
 ## X-LoadOn-InterfaceOptions: Kennel
 
-tekKonfig\tekKonfig.xml
+## LoadWith: Blizzard_PetJournal
+
+externals\debug.lua
+externals\events.lua
+externals\timer.lua
+externals\ui-about.lua
+externals\ui-check.lua
 
 Kennel.lua
-Config.lua
